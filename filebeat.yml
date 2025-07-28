@@ -1,0 +1,18 @@
+path.data: ./filebeat-data
+
+filebeat.inputs:
+  - type: filestream
+    id: json_input
+    enabled: true
+    paths:
+      - ./Data/*.json
+    parsers:
+      - ndjson:
+          keys_under_root: true
+          overwrite_keys: true
+          add_error_key: true
+    ignore_older: 0
+    scan_once: true
+
+output.logstash:
+  hosts: ["localhost:5044"]
